@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catch-a-Cat Warden</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="hud">
+      <div class="badge">⏱️ Time: <span id="time">60</span>s</div>
+      <div class="badge">🐾 Score: <span id="score">0</span></div>
+      <div class="badge controls">Move: WASD / Arrows • Cast Net: Space</div>
+    </div>
+
+    <main id="viewport">
+      <div id="world" aria-label="park world"></div>
+    </main>
+
+    <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
+      <div class="panel">
+        <h1>Time's Up!</h1>
+        <p>You caught <span id="finalScore">0</span> kittens.</p>
+        <button id="restart">Play Again</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
