@@ -5,6 +5,7 @@ const timeEl = document.getElementById("time");
 const finalScoreEl = document.getElementById("finalScore");
 const overlay = document.getElementById("overlay");
 const restartBtn = document.getElementById("restart");
+const touchButtons = Array.from(document.querySelectorAll(".touch-btn"));
 
 const WORLD = { width: 2300, height: 1500 };
 const game = {
@@ -183,7 +184,7 @@ function render() {
 
   const targetX = clamp(warden.x - viewport.clientWidth / 2, 0, WORLD.width - viewport.clientWidth);
   const targetY = clamp(warden.y - viewport.clientHeight / 2, 0, WORLD.height - viewport.clientHeight);
-  world.style.transform = `translate(${-targetX}px, ${-targetY}px)`;
+  world.style.transform = `translate3d(${-targetX}px, ${-targetY}px, 0) rotateX(9deg) scale(1.03)`;
 }
 
 function positionNode(node, x, y) {
@@ -237,3 +238,29 @@ window.addEventListener("keyup", (e) => {
 });
 
 restartBtn.addEventListener("click", resetGame);
+
+touchButtons.forEach((btn) => {
+  const press = (event) => {
+    event.preventDefault();
+    const key = btn.dataset.key;
+    if (!key) return;
+    game.keys.add(key);
+    btn.classList.add("active");
+    if (key === " ") castNet();
+  };
+
+  const release = (event) => {
+    event.preventDefault();
+    const key = btn.dataset.key;
+    if (!key) return;
+    game.keys.delete(key);
+    btn.classList.remove("active");
+  };
+
+  btn.addEventListener("pointerdown", press);
+  btn.addEventListener("pointerup", release);
+  btn.addEventListener("pointercancel", release);
+  btn.addEventListener("pointerleave", (event) => {
+    if (event.buttons === 0) release(event);
+  });
+});
